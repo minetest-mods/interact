@@ -84,5 +84,5 @@ interact.quiz_fail_msg = "You got that wrong."
 interact.interact_msg1 = "Thanks for accepting the rules, you now are able to interact with things."
 interact.interact_msg2 = "Happy building!"
 
---The priv required to use the /rules command.
-interact.priv = {fast = true}
+--The priv required to use the /rules command. If fast is a default priv, I recomend replacing shout with that.
+interact.priv = {shout = true}

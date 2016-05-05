@@ -64,16 +64,16 @@ local function make_formspec4(player)
 end
 
 minetest.register_on_player_receive_fields(function(player, formname, fields)
-	if formname ~= "welcome" then return end
+	if formname ~= "interact_welcome" then return end
 	local name = player:get_player_name()
 	if fields.no then
 		if interact.screen2 == false then
 			minetest.after(1, function()
-				minetest.show_formspec(name, "rules", make_formspec3(player))
+				minetest.show_formspec(name, "interact_rules", make_formspec3(player))
 			end)
 		else
 			minetest.after(1, function()
-				minetest.show_formspec(name, "visit", make_formspec2(player))
+				minetest.show_formspec(name, "interact_visit", make_formspec2(player))
 			end)
 		end
 		return
@@ -88,11 +88,11 @@ minetest.register_on_player_receive_fields(function(player, formname, fields)
 end)
 
 minetest.register_on_player_receive_fields(function(player, formname, fields)
-	if formname ~= "visit" then return end
+	if formname ~= "interact_visit" then return end
 	local name = player:get_player_name()
 	if fields.interact then
 		minetest.after(1, function()
-			minetest.show_formspec(name, "rules", make_formspec3(player))
+			minetest.show_formspec(name, "interact_rules", make_formspec3(player))
 		end)
 		return
 	elseif fields.visit then
@@ -104,7 +104,7 @@ end)
 
 
 minetest.register_on_player_receive_fields(function(player, formname, fields)
-	if formname ~= "rules" then return end
+	if formname ~= "interact_rules" then return end
 	local name = player:get_player_name()
 	if fields.accept then
 		if interact.screen4 == false then
@@ -118,26 +118,28 @@ minetest.register_on_player_receive_fields(function(player, formname, fields)
 			end
 		else
 			minetest.after(1, function()
-				minetest.show_formspec(name, "quiz", make_formspec4(player))
+				minetest.show_formspec(name, "interact_quiz", make_formspec4(player))
 			end)
 		end
 		return
 	elseif fields.decline then
-		if interact.disagree_ban ~= true then
+		if interact.disagree_action == "kick" then
 			minetest.kick_player(name, interact.disagree_msg)
-		else
+		elseif interact.disagree_action == "ban" then
 			minetest.ban_player(name)
+		else
+			minetest.chat_send_player(name, interact.disagree_msg)
 		end
 	return
 	end
 end)
 
 minetest.register_on_player_receive_fields(function(player, formname, fields)
-	if formname ~= "quiz" then return end
+	if formname ~= "interact_quiz" then return end
 	local name = player:get_player_name()
 	if fields.rules then
 		minetest.after(1, function()
-			minetest.show_formspec(name, "rules", make_formspec3(player))
+			minetest.show_formspec(name, "interact_rules", make_formspec3(player))
 		end)
 		return
 	end
@@ -180,12 +182,12 @@ minetest.register_on_player_receive_fields(function(player, formname, fields)
 		elseif interact.on_wrong_quiz == "reshow" then
 			minetest.chat_send_player(name, interact.quiz_try_again_msg)
 			minetest.after(1, function()
-				minetest.show_formspec(name, "quiz", make_formspec4(player))
+				minetest.show_formspec(name, "interact_quiz", make_formspec4(player))
 			end)
 		elseif interact.on_wrong_quiz == "rules" then
 			minetest.chat_send_player(name, interact.quiz_rules_msg)
 			minetest.after(1, function()
-				minetest.show_formspec(name, "rules", make_formspec3(player))
+				minetest.show_formspec(name, "interact_rules", make_formspec3(player))
 			end)
 		else
 			minetest.chat_send_player(name, interact.quiz_fail_msg)
@@ -201,15 +203,15 @@ minetest.register_chatcommand("rules",{
 	local player = minetest.get_player_by_name(name)
 		if interact.screen1 ~= false then
 			minetest.after(1, function()
-				minetest.show_formspec(name, "welcome", make_formspec(player))
+				minetest.show_formspec(name, "interact_welcome", make_formspec(player))
 			end)
 		elseif interact.screen2 ~= false then
 			minetest.after(1, function()
-				minetest.show_formspec(name, "visit", make_formspec2(player))
+				minetest.show_formspec(name, "interact_visit", make_formspec2(player))
 			end)
 		else
 			minetest.after(1, function()
-				minetest.show_formspec(name, "rules", make_formspec3(player))
+				minetest.show_formspec(name, "interact_rules", make_formspec3(player))
 			end)
 		end
 	end
@@ -219,11 +221,11 @@ minetest.register_on_joinplayer(function(player)
 	local name = player:get_player_name()
 	if not minetest.get_player_privs(name).interact then
 		if interact.screen1 ~= false then
-			minetest.show_formspec(name, "welcome", make_formspec(player))
+			minetest.show_formspec(name, "interact_welcome", make_formspec(player))
 		elseif interact.screen2 ~= false then
-			minetest.show_formspec(name, "visit", make_formspec2(player))
+			minetest.show_formspec(name, "interact_visit", make_formspec2(player))
 		else
-			minetest.show_formspec(name, "rules", make_formspec3(player))
+			minetest.show_formspec(name, "interact_rules", make_formspec3(player))
 		end
 	else
 		end

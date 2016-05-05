@@ -43,8 +43,9 @@ interact.s3_b2 = "I disagree"
 --The message to send players who disagree when they are kicked for disagring with the rules.
 interact.disagree_msg = "Bye then! You have to agree to the rules to play on the server."
 
---Kick or ban players who disagree with the rules. False will just kick.
-interact.disagree_ban = false
+--Kick, ban or ignore players who disagree with the rules.
+--Options are "kick" "ban" "nothing"
+interact.disagree_action = "kick"
 
 --The fouth screen--
 --Should there be a back to rules button?

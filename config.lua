@@ -1,5 +1,7 @@
 interact = {}
 
+interact.configured = false --Change this to true when you've configured the mod!
+
 --Which screens to show.
 interact.screen1 = true --The welcome a first question screen.
 interact.screen2 = true --The visit or interact screen.

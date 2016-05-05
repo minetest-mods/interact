@@ -63,6 +63,16 @@ local function make_formspec4(player)
 	return table.concat(size)
 end
 
+local server_formspec = "size[10,4]" ..
+	"label[0.5,0.5;Hey, you! Yes, you, the admin! What do you think you're doing]" ..
+	"label[0.5,0.9;ignoring warnings in the terminal? You should watch it carefully!]" ..
+	"label[0.5,1.5;Before you do anything else, open rules.lua in the interact mod]" ..
+	"label[0.5,1.9;and put your rules there. Then, open config.lua, and look at the]" ..
+	"label[0.5,2.3;settings. Configure them so that they match up with your rules.]" ..
+	"label[0.5,2.7;Then, set interact.configured to true, and this message will go away]" ..
+	"label[0.5,3.1;once you've restarted the server.]" ..
+	"label[0.5,3.6;Thank you!]"
+
 minetest.register_on_player_receive_fields(function(player, formname, fields)
 	if formname ~= "interact_welcome" then return end
 	local name = player:get_player_name()
@@ -227,7 +237,11 @@ minetest.register_on_joinplayer(function(player)
 		else
 			minetest.show_formspec(name, "interact_rules", make_formspec3(player))
 		end
-	else
-		end
+	elseif minetest.get_player_privs(name).server and interact.configured == false then
+		minetest.show_formspec(name, "interact_no_changes_made", server_formspec)
 	end
-)
+end)
+
+if not interact.configured then
+	minetest.log("warning", "Mod \"Interact\" has not been configured! Please open config.lua in its folder and configure it. See the readme of the mod for more details.")
+end

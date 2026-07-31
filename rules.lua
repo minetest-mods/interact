@@ -13,7 +13,7 @@ Rules:
 
 --The questions on the rules, if the quiz is used.
 --The checkboxes for the first 4 questions are in config.lua
-interact.s4_question1 = "Is PVP is allowed?"
+interact.s4_question1 = "Is PVP allowed?"
 interact.s4_question2 = "Is family roleplay allowed?"
 interact.s4_question3 = "Should you be nice to all players?"
 interact.s4_question4 = "Should you ask for all the privs you can?"

@@ -32,7 +32,8 @@ interact.s2_b1 = "Yes, I want interact!"
 interact.s2_b2 = "I just want to look round."
 
 --The message the player is sent if s/he is just visiting.
-interact.visit_msg = "Have a nice time looking round! If you want interact just type /rules, and you can go through the process again!"
+interact.visit_msg =
+	"Have a nice time looking round! If you want interact just type /rules, and you can go through the process again!"
 
 --The third screen--
 --The header for the rules box, this can have 60 characters, max.
@@ -88,4 +89,4 @@ interact.interact_msg1 = "Thanks for accepting the rules, you now are able to in
 interact.interact_msg2 = "Happy building!"
 
 --The priv required to use the /rules command. If fast is a default priv, I recomend replacing shout with that.
-interact.priv = {shout = true}
+interact.priv = { shout = true }
